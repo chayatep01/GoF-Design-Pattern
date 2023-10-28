@@ -3,6 +3,7 @@ import { HourFlex } from './packages/hourflexPackageCalculator';
 import { UnknowPackage } from './packages/unknownPackageCalculator';
 import { PackageType } from './packages/packageType';
 import { Stepping } from './packages/steppingCalculator';
+import { packageFactory } from './packages/packageFactory';
 
 export class Billing {
   private vatRate = 7.0;
@@ -15,25 +16,11 @@ export class Billing {
   }
 
   public monthlyBill(): number {
-    var total = this
-    .package(this.packageType)
+    var total = packageFactory
+    .createPackage(this.packageType)
     .calculate(this.totalHours)
 
     return this.vatInclued(total)
-  }
-
-  package(packageType: string) {
-    switch(packageType) {
-      case PackageType.FIXED :
-        return new HourFix()
-      case PackageType.HOUR_FLEX :
-        return new HourFlex()
-      case PackageType.STEPPING :
-        return new Stepping()
-
-      default:
-        return new UnknowPackage()
-    }
   }
   
   vatInclued(total: number) {
