@@ -19,6 +19,8 @@ export class Billing {
     var total = 0.0;
     if (this.packageType === PackageType.FIXED) {
       total = 500;
+    } else if (this.packageType === PackageType.STEPPING) {
+      total = 50;
     } else if (this.packageType === PackageType.HOUR_FLEX) {
       total = this.totalHours * 50;
     } else total = 0;
